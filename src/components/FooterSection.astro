@@ -1,0 +1,111 @@
+---
+import site from '../content/site.json';
+import team from '../content/team.json';
+---
+
+<footer class="footer graticule-bg" role="contentinfo">
+  <div class="container footer-content">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3 class="footer-title">{site.title}</h3>
+        <p class="footer-subtitle mono">{site.subtitle}</p>
+      </div>
+
+      <div class="footer-team">
+        <span class="team-label mono">// Engineering Project Contributors</span>
+        <div class="team-names">
+          {team.members.map((m, idx) => (
+            <span class="team-name-item">
+              <strong>{m.name}</strong> <span class="role-hint">({m.role})</span>{idx < team.members.length - 1 ? ' · ' : ''}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="copyright mono">© {site.year} Student Engineering Team. All technical calculations & V&V protocols verified from source design logs.</span>
+      <span class="status-indicator mono">SIGNAL BENCH ACTIVE // 24V DC</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+.footer {
+  border-top: 1px solid var(--graticule-mid);
+  padding-block: var(--space-12) var(--space-8);
+  background: var(--glass-deep);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  border-bottom: 1px solid var(--graticule);
+  padding-bottom: var(--space-8);
+}
+
+.footer-brand {
+  max-width: 45ch;
+}
+
+.footer-title {
+  font-size: var(--text-base);
+  color: var(--phosphor);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+}
+
+.footer-subtitle {
+  font-size: var(--text-xs);
+  color: var(--ink-secondary);
+  margin-bottom: 0;
+}
+
+.footer-team {
+  max-width: 50ch;
+}
+
+.team-label {
+  font-size: var(--text-xs);
+  color: var(--phosphor-dim);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.team-names {
+  font-size: var(--text-xs);
+  color: var(--ink-secondary);
+  line-height: 1.6;
+}
+
+.team-name-item strong {
+  color: var(--ink-primary);
+}
+
+.role-hint {
+  color: var(--ink-caption);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--ink-caption);
+}
+
+.status-indicator {
+  color: var(--phosphor-dim);
+}
+</style>

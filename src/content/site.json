@@ -1,0 +1,19 @@
+{
+  "title": "Electromagnetic Lift-Assisted Transport",
+  "subtitle": "A 3-metre actively controlled linear transport track for material handling",
+  "description": "A five-person student engineering team designing and building an electromagnetic lift-assisted linear transport system — from concept selection through force modelling, electronics design, firmware architecture, and validation planning.",
+  "year": 2026,
+  "heroStats": [
+    { "value": "3 m", "label": "Stator track" },
+    { "value": "30", "label": "Drive coils" },
+    { "value": "24 V", "label": "DC supply" },
+    { "value": "4", "label": "Architectures evaluated" }
+  ],
+  "heroVideo": "/media/videos/technical-animation.mp4",
+  "heroPoster": "/media/images/technical-animation-poster.jpg",
+  "meta": {
+    "title": "Electromagnetic Lift-Assisted Transport — Student Engineering Project",
+    "description": "A 3-metre actively controlled electromagnetic transport track. From concept selection to validation planning — real engineering data, honest statuses.",
+    "ogImage": "/media/images/technical-animation-poster.jpg"
+  }
+}

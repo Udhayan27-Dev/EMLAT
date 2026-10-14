@@ -1,0 +1,102 @@
+/* ==========================================================================
+   DESIGN TOKENS — Electromagnetic Lift-Assisted Transport showcase
+   Visual theme: Clean Editorial Light Engineering
+   Palette: Crisp paper white, warm tinted surfaces, slate borders,
+   electric precision cyan/teal accent, vivid amber readouts, and high-contrast ink
+   ========================================================================== */
+
+:root {
+
+  /* --- Light Palette Surfaces --- */
+  --glass-black:    #f8fafc;    /* primary page ground (crisp slate-50/off-white) */
+  --glass-deep:     #f1f5f9;    /* secondary surface / nav / footer (slate-100) */
+  --glass-panel:    #ffffff;    /* panel / card background (pure white) */
+  --glass-border:   #e2e8f0;    /* clean panel border (slate-200) */
+  --graticule:      #e2e8f0;    /* etched technical grid lines (slate-200) */
+  --graticule-mid:  #cbd5e1;    /* mid-weight divider / rail background (slate-300) */
+
+  /* --- Accent Colors --- */
+  --phosphor:       #0d9488;    /* primary accent: deep electric teal (teal-600) - high contrast on light */
+  --phosphor-dim:   #0f766e;    /* darker teal (teal-700) for subheads */
+  --phosphor-glow:  rgba(13, 148, 136, 0.15); /* soft teal ambient highlight */
+  --phosphor-faint: #ccfbf1;    /* very light teal wash (teal-100) */
+
+  --amber:          #d97706;    /* amber/brass: technical status & telemetry (amber-600) */
+  --amber-dim:      #b45309;    /* darker amber (amber-700) */
+  --amber-glow:     rgba(217, 119, 6, 0.15); /* amber ambient highlight */
+
+  --signal-red:     #dc2626;    /* red (red-600) for warnings / north pole */
+  --signal-ok:      #0d9488;    /* success/ok */
+
+  /* --- Text & Inks (High contrast readable typography) --- */
+  --ink-primary:    #0f172a;    /* primary body text (slate-900) - razor sharp legibility */
+  --ink-secondary:  #475569;    /* secondary / descriptive text (slate-600) */
+  --ink-caption:    #64748b;    /* captions & meta tags (slate-500) */
+  --ink-inverse:    #ffffff;    /* inverse text on dark badges/chips */
+
+  /* --- Typography --- */
+  /* Display: Syne / Space Grotesk — modern, editorial, confident */
+  /* Body: Plus Jakarta Sans / Inter — clean, legible, contemporary tech */
+  /* Mono: JetBrains Mono / Space Mono — figures, telemetry, coordinates */
+  --font-display:  'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-body:     'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:     'JetBrains Mono', monospace;
+
+  /* --- Type scale --- */
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  2rem;      /* 32px */
+  --text-4xl:  2.75rem;   /* 44px */
+  --text-5xl:  3.5rem;    /* 56px */
+  --text-6xl:  5rem;      /* 80px */
+
+  /* --- Spacing --- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-40: 10rem;
+
+  /* --- Layout --- */
+  --container-sm:  40rem;   /* 640px */
+  --container-md:  56rem;   /* 896px */
+  --container-lg:  72rem;   /* 1152px */
+  --container-xl:  86rem;   /* 1376px */
+  --gutter:        clamp(1rem, 5vw, 3rem);
+  --section-gap:   clamp(5rem, 10vw, 9rem);
+
+  /* --- Border radii --- */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+
+  /* --- Shadows (Crisp light elevation) --- */
+  --glow-phosphor: 0 4px 14px 0 rgba(13, 148, 136, 0.2);
+  --glow-amber:    0 4px 14px 0 rgba(217, 119, 6, 0.2);
+  --glow-text:     none;
+  --card-shadow:   0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+
+  /* --- Transitions --- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 150ms var(--ease-out-expo);
+  --transition-mid:  300ms var(--ease-out-expo);
+  --transition-slow: 500ms var(--ease-out-expo);
+
+  /* --- Z-index layers --- */
+  --z-nav:     100;
+  --z-overlay: 200;
+}

@@ -1,0 +1,185 @@
+{
+  "period": "August – November 2026",
+  "weeks": ["Aug W3", "Aug W4", "Sep W1", "Sep W2", "Sep W3", "Sep W4", "Oct W1", "Oct W2", "Oct W3", "Oct W4", "Nov W1", "Nov W2", "Nov W3", "Nov W4"],
+  "workstreams": [
+    {
+      "id": "A",
+      "label": "Mechanical Design & Fabrication",
+      "status": "Yet to Start",
+      "modules": [
+        {
+          "id": "A1",
+          "name": "Track & Carrier Concept Design",
+          "status": "In Progress",
+          "tasks": [
+            { "id": "A1.1", "name": "Define track modular architecture", "status": "Stuck" },
+            { "id": "A1.2", "name": "Caster wheel selection — load rating, mounting pattern", "status": "Completed" },
+            { "id": "A1.3", "name": "Lift target plate material selection (mild steel)", "status": "Yet to Start" },
+            { "id": "A1.4", "name": "Architecture diagram — block-level system overview", "status": "Yet to Start" },
+            { "id": "A1.5", "name": "Air-gap tolerance stack-up analysis (2–3 mm)", "status": "Yet to Start" },
+            { "id": "A1.6", "name": "Concept 3D model design", "status": "Yet to Start" }
+          ]
+        },
+        {
+          "id": "A2",
+          "name": "Detailed Mechanical CAD",
+          "status": "Yet to Start",
+          "tasks": [
+            { "id": "A2.1", "name": "Track module CAD — extrusion, coil bobbin mounts", "status": "Yet to Start" },
+            { "id": "A2.2", "name": "Carrier chassis CAD — payload deck, caster-wheel mounts", "status": "Yet to Start" },
+            { "id": "A2.3", "name": "End-of-travel bump-stop and limit-switch mounting", "status": "Yet to Start" },
+            { "id": "A2.4", "name": "Design-for-fabrication review (3D-print feasibility)", "status": "Yet to Start" },
+            { "id": "A2.5", "name": "Finalise mechanical drawings V1", "status": "Yet to Start" }
+          ]
+        },
+        {
+          "id": "A3",
+          "name": "Fabrication & Procurement",
+          "status": "Yet to Start",
+          "tasks": [
+            { "id": "A3.1", "name": "Aluminium extrusion procurement & cutting", "status": "Yet to Start" },
+            { "id": "A3.2", "name": "3D-printed coil bobbin fabrication", "status": "Yet to Start" },
+            { "id": "A3.3", "name": "Caster-wheel procurement", "status": "Yet to Start" },
+            { "id": "A3.4", "name": "Lift target plate fabrication / procurement", "status": "Yet to Start" }
+          ]
+        },
+        {
+          "id": "A4",
+          "name": "Mechanical Assembly & Alignment",
+          "status": "Yet to Start",
+          "tasks": [
+            { "id": "A4.1", "name": "Track module assembly & bolt-up", "status": "Yet to Start" },
+            { "id": "A4.2", "name": "Module-to-module alignment & coaxiality check", "status": "Yet to Start" },
+            { "id": "A4.3", "name": "Carrier assembly — chassis + caster wheels + lift target plate", "status": "Yet to Start" },
+            { "id": "A4.4", "name": "Air-gap shimming & verification across all modules", "status": "Yet to Start" },
+            { "id": "A4.5", "name": "End-stop and limit-switch installation", "status": "Yet to Start" },
+            { "id": "A4.6", "name": "Mechanical QA sign-off for electrical integration", "status": "Yet to Start" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "Electrical & Power Electronics",
+      "status": "In Progress",
+      "modules": [
+        {
+          "id": "B1",
+          "name": "Force Budget & Component Selection",
+          "status": "Completed",
+          "tasks": [
+            { "id": "B1.1", "name": "Lift electromagnet force calculation", "status": "Completed" },
+            { "id": "B1.2", "name": "Electromagnetic simulator", "status": "Completed" },
+            { "id": "B1.3", "name": "Concept and working animation", "status": "Completed" },
+            { "id": "B1.4", "name": "Air-gap & flux density calculation", "status": "Completed" },
+            { "id": "B1.5", "name": "Electronic architecture", "status": "Completed" },
+            { "id": "B1.6", "name": "Electromagnet coil & magnetic flux calculator", "status": "Completed" },
+            { "id": "B1.7", "name": "Coil force calculator", "status": "Completed" },
+            { "id": "B1.8", "name": "Blender animations & concept architecture", "status": "Completed" },
+            { "id": "B1.9", "name": "Exploration BOM", "status": "Completed" },
+            { "id": "B1.10", "name": "Propulsion coil MMF sizing vs. required acceleration", "status": "Completed" },
+            { "id": "B1.11", "name": "Component exploration — MOSFET / driver IC selection", "status": "Completed" },
+            { "id": "B1.12", "name": "Datasheet study — electrical characteristics, thermal ratings", "status": "Completed" },
+            { "id": "B1.13", "name": "Identify passive components — capacitors, resistors", "status": "Completed" }
+          ]
+        },
+        {
+          "id": "B2",
+          "name": "Schematic Design",
+          "status": "Yet to Start",
+          "tasks": [
+            { "id": "B2.1", "name": "Lift electromagnet driver schematic (PWM current-regulated)", "status": "Yet to Start" },
+            { "id": "B2.2", "name": "Propulsion MOSFET driver-array schematic", "status": "Yet to Start" },
+            { "id": "B2.3", "name": "Power distribution & capacitor-bank schematic", "status": "Yet to Start" },
+            { "id": "B2.4", "name": "Protection circuitry — fuse, flyback diode, E-stop relay", "status": "Yet to Start" },
+            { "id": "B2.5", "name": "Schematic review & Electrical Rule Check (ERC)", "status": "Yet to Start" }
+          ]
+        },
+        {
+          "id": "B3",
+          "name": "Coil Winding & Procurement",
+          "status": "Yet to Start",
+          "tasks": [
+            { "id": "B3.1", "name": "Magnet wire procurement", "status": "Yet to Start" },
+            { "id": "B3.2", "name": "Local vendor coordination (coil winding)", "status": "Yet to Start" },
+            { "id": "B3.3", "name": "Lift-electromagnet coil winding to spec turns count", "status": "Yet to Start" },
+            { "id": "B3.4", "name": "Propulsion coil winding to spec turns count", "status": "Yet to Start" },
+            { "id": "B3.5", "name": "Coil QC — resistance/inductance verification", "status": "Yet to Start" }
+          ]
+        },
+        {
+          "id": "B4",
+          "name": "Electrical Bring-up & Bench Test",
+          "status": "Yet to Start",
+          "tasks": [
+            { "id": "B4.1", "name": "Power-on test & bus-voltage verification", "status": "Yet to Start" },
+            { "id": "B4.2", "name": "Lift-electromagnet current & force verification (load cell)", "status": "Yet to Start" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "Embedded Firmware & Controls",
+      "status": "In Progress",
+      "modules": [
+        {
+          "id": "C1",
+          "name": "Bench Experiments & Platform Exploration",
+          "status": "In Progress",
+          "tasks": [
+            { "id": "C1.1", "name": "IR-sensor H-bridge motor control experiments", "status": "Completed" },
+            { "id": "C1.2", "name": "Multi-sensor dashboard experiments (10 DHT11 sensors)", "status": "Completed" },
+            { "id": "C1.3", "name": "STM32 workings and interfacings study", "status": "In Progress" },
+            { "id": "C1.4", "name": "Hall-sensor (A3144) & current-sensor interfacing on STM32", "status": "Yet to Start" }
+          ]
+        },
+        {
+          "id": "C2",
+          "name": "Firmware Implementation",
+          "status": "Yet to Start",
+          "tasks": [
+            { "id": "C2.1", "name": "PID closed-loop current regulation", "status": "Yet to Start" },
+            { "id": "C2.2", "name": "Hall-sensor position decoding & zone-switching commutation", "status": "Yet to Start" },
+            { "id": "C2.3", "name": "Bidirectional motion & acceleration/deceleration profiling", "status": "Yet to Start" },
+            { "id": "C2.4", "name": "Hardware E-stop interrupt, watchdog, over-temperature handling", "status": "Yet to Start" },
+            { "id": "C2.5", "name": "UART/CAN telemetry and logging", "status": "Yet to Start" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "Integration, Testing & Validation",
+      "status": "Yet to Start",
+      "modules": [
+        {
+          "id": "D1",
+          "name": "System Integration",
+          "status": "Yet to Start",
+          "tasks": [
+            { "id": "D1.1", "name": "Hardware integration — track, carrier, electronics", "status": "Yet to Start" },
+            { "id": "D1.2", "name": "Firmware integration with hardware", "status": "Yet to Start" }
+          ]
+        },
+        {
+          "id": "D2",
+          "name": "V&V Testing",
+          "status": "Yet to Start",
+          "tasks": [
+            { "id": "D2.1", "name": "TC-AMF-001: Traversal A→B", "status": "Yet to Start" },
+            { "id": "D2.2", "name": "TC-AMF-002: Traversal B→C", "status": "Yet to Start" },
+            { "id": "D2.3", "name": "TC-AMF-003: Full reversal C→A", "status": "Yet to Start" },
+            { "id": "D2.4", "name": "TC-AMF-004: 10-cycle endurance & thermal check", "status": "Yet to Start" }
+          ]
+        }
+      ]
+    }
+  ],
+  "supportingWork": [
+    { "name": "Ansys Maxwell simulation", "status": "In Progress", "note": "Magnetostatic analysis attempted; transient analysis requires non-student license" },
+    { "name": "Wokwi simulation", "status": "Blocked", "note": "Cannot simulate the H-bridge drivers in Wokwi" },
+    { "name": "System architecture diagram", "status": "Completed", "note": "Obsidian diagram, needs verification" },
+    { "name": "Blender concept animation", "status": "Completed", "note": "Technical animation of coil working principle" }
+  ]
+}

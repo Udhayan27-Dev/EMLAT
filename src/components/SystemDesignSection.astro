@@ -1,0 +1,272 @@
+---
+import specs from '../content/specs.json';
+---
+
+<section class="section system-section graticule-bg" id="system" aria-labelledby="system-title">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">04 // Hardware & Software Integration</span>
+      <h2 id="system-title" class="section-heading">System Design & Implementation</h2>
+      <p class="section-desc">
+        A coordinated multi-domain engineering stack: modular aluminium structure, closed-loop STM32 microcontroller firmware, and high-current power stages.
+      </p>
+    </div>
+
+    <!-- Architecture Block Diagram (SVG) -->
+    <div class="panel diagram-panel reveal">
+      <h3 class="panel-heading mono">// Block-Level System Architecture</h3>
+      
+      <div class="diagram-svg-wrap">
+        <svg class="diagram-svg" viewBox="0 0 900 360" preserveAspectRatio="xMidYMid meet" aria-label="Block diagram of system electronics and power distribution">
+          <!-- Main 24V Power Bus -->
+          <rect x="30" y="30" width="160" height="90" rx="4" fill="var(--glass-deep)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="110" y="60" fill="var(--amber)" font-family="var(--font-mono)" font-size="12" font-weight="700" text-anchor="middle">24V DC POWER</text>
+          <text x="110" y="80" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">50A Fuse + E-Stop</text>
+          <text x="110" y="98" fill="var(--ink-caption)" font-family="var(--font-mono)" font-size="9" text-anchor="middle">Capacitor Bank Inrush</text>
+
+          <!-- 24V to 5V Buck -->
+          <path d="M 190 75 L 260 75" stroke="var(--amber)" stroke-width="2" marker-end="url(#arrow)"/>
+          <rect x="260" y="45" width="130" height="60" rx="4" fill="var(--glass-deep)" stroke="var(--graticule-mid)"/>
+          <text x="325" y="72" fill="var(--ink-primary)" font-family="var(--font-mono)" font-size="11" text-anchor="middle">Buck Converter</text>
+          <text x="325" y="90" fill="var(--ink-caption)" font-family="var(--font-mono)" font-size="9" text-anchor="middle">24V → 5V Step-Down</text>
+
+          <!-- STM32 Controller -->
+          <path d="M 390 75 L 460 75" stroke="var(--phosphor)" stroke-width="2"/>
+          <rect x="460" y="30" width="180" height="140" rx="4" fill="var(--glass-deep)" stroke="var(--phosphor)" stroke-width="2"/>
+          <text x="550" y="60" fill="var(--phosphor)" font-family="var(--font-display)" font-size="13" font-weight="700" text-anchor="middle">STM32 CONTROLLER</text>
+          <text x="550" y="80" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">PID Current Loop</text>
+          <text x="550" y="100" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">Zone Commutation</text>
+          <text x="550" y="120" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">E-Stop & Thermal ISR</text>
+          <text x="550" y="140" fill="var(--ink-caption)" font-family="var(--font-mono)" font-size="9" text-anchor="middle">UART/CAN Telemetry</text>
+
+          <!-- Sensors Inputs to STM32 -->
+          <rect x="460" y="220" width="180" height="100" rx="4" fill="var(--glass-deep)" stroke="var(--graticule-mid)"/>
+          <text x="550" y="245" fill="var(--ink-primary)" font-family="var(--font-mono)" font-size="11" font-weight="700" text-anchor="middle">SENSOR FEEDBACK</text>
+          <text x="550" y="265" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">Hall Sensors (A3144)</text>
+          <text x="550" y="285" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">Current Sense (Shunt)</text>
+          <text x="550" y="305" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">NTC Thermistors (×3)</text>
+          
+          <path d="M 550 220 L 550 170" stroke="var(--phosphor-dim)" stroke-width="2" stroke-dasharray="4 4"/>
+
+          <!-- Dual H-Bridge Drivers -->
+          <path d="M 640 100 L 710 100" stroke="var(--phosphor)" stroke-width="2"/>
+          <rect x="710" y="45" width="160" height="110" rx="4" fill="var(--glass-deep)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="790" y="72" fill="var(--amber)" font-family="var(--font-mono)" font-size="11" font-weight="700" text-anchor="middle">DUAL H-BRIDGES (×3)</text>
+          <text x="790" y="92" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">MOSFET Driver Array</text>
+          <text x="790" y="112" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">Polarity Switching</text>
+          <text x="790" y="132" fill="var(--ink-caption)" font-family="var(--font-mono)" font-size="9" text-anchor="middle">Flyback Diode Clamped</text>
+
+          <!-- 30 Stator Coils -->
+          <path d="M 790 155 L 790 220" stroke="var(--amber)" stroke-width="2"/>
+          <rect x="710" y="220" width="160" height="100" rx="4" fill="var(--glass-deep)" stroke="var(--phosphor)" stroke-width="1.5"/>
+          <text x="790" y="250" fill="var(--phosphor)" font-family="var(--font-mono)" font-size="11" font-weight="700" text-anchor="middle">30 STATOR COILS</text>
+          <text x="790" y="272" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">3.0m Extrusion Track</text>
+          <text x="790" y="292" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">E-30 Ferrite Cores</text>
+          <text x="790" y="308" fill="var(--ink-caption)" font-family="var(--font-mono)" font-size="9" text-anchor="middle">Lift & Propulsion</text>
+
+          <!-- Power line from 24V to Drivers -->
+          <path d="M 110 120 L 110 340 L 790 340 L 790 320" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="3 3" fill="none"/>
+          <text x="450" y="352" fill="var(--amber)" font-family="var(--font-mono)" font-size="9" text-anchor="middle">24V High-Current Bus</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 3 Subsections: Mechanical, Electronics, Firmware -->
+    <div class="grid-3 system-subsections reveal">
+      <!-- Mechanical -->
+      <div class="panel">
+        <h3 class="subsection-title mono">// Mechanical Subsystem</h3>
+        <ul class="spec-list">
+          {specs.mechanical.map((item) => (
+            <li class="spec-list-item">
+              <span class="bullet mono">›</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="sub-status">
+          <span class="badge badge--inprogress">Fabrication Prep</span>
+        </div>
+      </div>
+
+      <!-- Electronics -->
+      <div class="panel">
+        <h3 class="subsection-title mono">// Power & Electronics</h3>
+        <ul class="spec-list">
+          {specs.electronics.slice(0, 6).map((item) => (
+            <li class="spec-list-item">
+              <span class="bullet mono">›</span>
+              <span><strong>{item.component}:</strong> {item.role}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="sub-status">
+          <span class="badge badge--completed">Sizing Complete</span>
+        </div>
+      </div>
+
+      <!-- Firmware -->
+      <div class="panel">
+        <h3 class="subsection-title mono">// Firmware & Controls</h3>
+        <ul class="spec-list">
+          {specs.firmware.slice(0, 6).map((item) => (
+            <li class="spec-list-item">
+              <span class="bullet mono">›</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="sub-status">
+          <span class="badge badge--inprogress">Bench Prototyping</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prototype Budget Summary Callout -->
+    <div class="panel budget-panel reveal">
+      <div class="budget-content">
+        <div>
+          <span class="mono section-label">Cost Optimization</span>
+          <h4 class="budget-heading">Lean Prototype Budget: INR {specs.budget.total_INR.toLocaleString()}</h4>
+          <p class="budget-sub mono">
+            {specs.budget.line_items} line items total. Leveraged existing university inventory to keep new expenditure constrained.
+          </p>
+        </div>
+        <div class="budget-breakdown">
+          <div class="readout">
+            <span class="readout-val mono">₹{specs.budget.existing_inventory_INR.toLocaleString()}</span>
+            <span class="readout-lbl mono">Existing Inventory</span>
+          </div>
+          <div class="readout">
+            <span class="readout-val mono">₹{specs.budget.new_purchase_INR.toLocaleString()}</span>
+            <span class="readout-lbl mono">New Purchase</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.system-section {
+  border-top: 1px solid var(--graticule);
+}
+
+.section-heading {
+  margin-bottom: var(--space-4);
+}
+
+.section-desc {
+  max-width: 65ch;
+  color: var(--ink-secondary);
+  margin-bottom: var(--space-10);
+}
+
+.diagram-panel {
+  margin-bottom: var(--space-8);
+}
+
+.panel-heading {
+  font-size: var(--text-sm);
+  color: var(--phosphor);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-4);
+}
+
+.diagram-svg-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background: #090d16;
+  border: 1px solid var(--graticule-mid);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.diagram-svg {
+  width: 100%;
+  min-width: 750px;
+  height: auto;
+  display: block;
+}
+
+.system-subsections {
+  margin-bottom: var(--space-8);
+}
+
+.subsection-title {
+  font-size: var(--text-sm);
+  color: var(--phosphor);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-4);
+}
+
+.spec-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.spec-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--ink-secondary);
+  line-height: 1.5;
+}
+
+.bullet {
+  color: var(--phosphor);
+  font-weight: 700;
+}
+
+.sub-status {
+  margin-top: auto;
+}
+
+.budget-panel {
+  border-color: var(--amber-dim);
+  background: color-mix(in srgb, var(--glass-panel) 94%, var(--amber) 6%);
+}
+
+.budget-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.budget-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--amber);
+  margin-bottom: var(--space-1);
+}
+
+.budget-sub {
+  font-size: var(--text-xs);
+  color: var(--ink-secondary);
+  margin-bottom: 0;
+}
+
+.budget-breakdown {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.readout-val {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.readout-lbl {
+  font-size: var(--text-xs);
+  color: var(--ink-caption);
+  text-transform: uppercase;
+}
+</style>

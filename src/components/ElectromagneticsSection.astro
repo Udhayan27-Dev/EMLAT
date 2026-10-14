@@ -1,0 +1,310 @@
+---
+import specs from '../content/specs.json';
+---
+
+<section class="section em-section graticule-bg" id="electromagnetics" aria-labelledby="em-title">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">03 // Electromagnetic Design</span>
+      <h2 id="em-title" class="section-heading">Physics & Magnetic Modelling</h2>
+      <p class="section-desc">
+        Pull force calculation uses the magnetic pole attraction formulation with a 1.5× safety margin. Parametric sweeps across supply voltages proved that 24 V satisfies the required normal lift force while 12 V and 36 V configurations fail operating boundaries.
+      </p>
+    </div>
+
+    <!-- Physics Equation & Core Trade-off -->
+    <div class="grid-2 em-top-grid">
+      <!-- Force Equation & Theory -->
+      <div class="panel reveal">
+        <h3 class="panel-heading mono">// Force Equation Formulation</h3>
+        <div class="equation-box">
+          <code class="equation-text mono">{specs.forceModel.equation}</code>
+        </div>
+        <p class="panel-subtext">
+          Where <strong>N·I</strong> is the magnetomotive force (ampere-turns), <strong>μ₀</strong> is the permeability of free space (4π × 10⁻⁷ H/m), <strong>A_pole</strong> is the active pole face cross-section, and <strong>gap</strong> is the operating air separation (nominal 2–3 mm).
+        </p>
+        <div class="safety-factor-tag">
+          <span class="badge badge--ok">Safety Factor = {specs.forceModel.safetyFactor}×</span>
+          <span class="safety-text mono">Accounts for dynamic roll, aerodynamic drag, and friction margin.</span>
+        </div>
+      </div>
+
+      <!-- Core Geometry Selection Story -->
+      <div class="panel reveal">
+        <h3 class="panel-heading mono">// Core Geometry Selection</h3>
+        <p class="panel-subtext">
+          Three standard ferrite/steel core profiles were rated with weighted engineering metrics (flux leakage, thrust/W, sourcing, winding ease). While <strong>C-Core</strong> ranked highest analytically, <strong>E-Core (E-30)</strong> was chosen for physical implementation due to off-the-shelf availability and winding feasibility.
+        </p>
+
+        <div class="core-comparison-bars">
+          {specs.coreComparison.map((core) => (
+            <div class={`core-bar-item ${core.prototypeChoice ? 'core-bar-item--selected' : ''}`}>
+              <div class="core-bar-header">
+                <span class="core-name">
+                  <strong>{core.core}</strong> {core.prototypeChoice ? '(Prototype Choice)' : ''}
+                </span>
+                <span class="core-score mono">{core.score} / 5.00</span>
+              </div>
+              <div class="core-progress-track">
+                <div class="core-progress-fill" style={`width: ${(core.score / 5.0) * 100}%;`}></div>
+              </div>
+              <div class="core-pros-cons mono">
+                <span>+ {core.strengths.join(' · ')}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Force vs Voltage Parametric Validation Chart -->
+    <div class="panel chart-panel reveal">
+      <div class="chart-header">
+        <div>
+          <h3 class="panel-heading mono">// Parametric Sweep: Pull Force vs Supply Voltage</h3>
+          <p class="chart-subhead">Verification of coil pull force against required design load at 12 V, 24 V, and 36 V.</p>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-dot legend-dot--produced"></span> <span class="mono">Force Produced</span>
+          <span class="legend-dot legend-dot--required"></span> <span class="mono">Force Required</span>
+        </div>
+      </div>
+
+      <!-- SVG Chart for Voltage Comparison -->
+      <div class="chart-svg-wrap">
+        <svg class="chart-svg" viewBox="0 0 800 320" preserveAspectRatio="xMidYMid meet" aria-label="Parametric sweep bar chart of pull force across voltages">
+          <!-- Grid lines -->
+          <line x1="80" y1="40" x2="760" y2="40" stroke="var(--graticule-mid)" stroke-dasharray="4 4"/>
+          <text x="65" y="45" fill="var(--ink-caption)" font-family="var(--font-mono)" font-size="11" text-anchor="end">50 N</text>
+
+          <line x1="80" y1="100" x2="760" y2="100" stroke="var(--graticule-mid)" stroke-dasharray="4 4"/>
+          <text x="65" y="105" fill="var(--ink-caption)" font-family="var(--font-mono)" font-size="11" text-anchor="end">40 N</text>
+
+          <line x1="80" y1="160" x2="760" y2="160" stroke="var(--graticule-mid)" stroke-dasharray="4 4"/>
+          <text x="65" y="165" fill="var(--ink-caption)" font-family="var(--font-mono)" font-size="11" text-anchor="end">30 N</text>
+
+          <line x1="80" y1="220" x2="760" y2="220" stroke="var(--graticule-mid)" stroke-dasharray="4 4"/>
+          <text x="65" y="225" fill="var(--ink-caption)" font-family="var(--font-mono)" font-size="11" text-anchor="end">20 N</text>
+
+          <line x1="80" y1="280" x2="760" y2="280" stroke="var(--graticule-mid)"/>
+          <text x="65" y="285" fill="var(--ink-caption)" font-family="var(--font-mono)" font-size="11" text-anchor="end">0 N</text>
+
+          <!-- Group 1: 2 kg target @ 12V -->
+          <!-- Req: 29.43 N -> y = 280 - (29.43 * 4.8) = 138.7. Prod: 29.42 -> y = 138.8 -->
+          <rect x="110" y="139" width="35" height="141" fill="var(--amber-dim)" opacity="0.6"/>
+          <rect x="150" y="139" width="35" height="141" fill="var(--signal-red)" opacity="0.8"/>
+          <text x="147" y="300" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">2kg @ 12V</text>
+          <text x="147" y="130" fill="var(--signal-red)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">29.42N (LOW)</text>
+
+          <!-- Group 2: 2 kg target @ 24V (WINNER) -->
+          <!-- Req: 29.43 N. Prod: 29.59 N -> y = 280 - (29.59 * 4.8) = 138.0 -->
+          <rect x="220" y="139" width="35" height="141" fill="var(--amber-dim)" opacity="0.6"/>
+          <rect x="260" y="138" width="35" height="142" fill="var(--phosphor)"/>
+          <text x="257" y="300" fill="var(--phosphor)" font-family="var(--font-mono)" font-size="10" font-weight="700" text-anchor="middle">2kg @ 24V ✓</text>
+          <text x="257" y="125" fill="var(--phosphor)" font-family="var(--font-mono)" font-size="10" font-weight="700" text-anchor="middle">29.59N (OK)</text>
+
+          <!-- Group 3: 2 kg target @ 36V -->
+          <rect x="330" y="139" width="35" height="141" fill="var(--amber-dim)" opacity="0.6"/>
+          <rect x="370" y="140" width="35" height="140" fill="var(--signal-red)" opacity="0.8"/>
+          <text x="367" y="300" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">2kg @ 36V</text>
+          <text x="367" y="130" fill="var(--signal-red)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">29.26N (LOW)</text>
+
+          <!-- Group 4: 3 kg target @ 12V -->
+          <!-- Req: 44.15 N -> y = 280 - (44.15 * 4.8) = 68.1. Prod: 44.02 N -> y = 68.7 -->
+          <rect x="470" y="68" width="35" height="212" fill="var(--amber-dim)" opacity="0.6"/>
+          <rect x="510" y="69" width="35" height="211" fill="var(--signal-red)" opacity="0.8"/>
+          <text x="507" y="300" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">3kg @ 12V</text>
+          <text x="507" y="58" fill="var(--signal-red)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">44.02N (LOW)</text>
+
+          <!-- Group 5: 3 kg target @ 24V (WINNER) -->
+          <!-- Req: 44.15 N. Prod: 44.30 N -> y = 67.4 -->
+          <rect x="580" y="68" width="35" height="212" fill="var(--amber-dim)" opacity="0.6"/>
+          <rect x="620" y="67" width="35" height="213" fill="var(--phosphor)"/>
+          <text x="617" y="300" fill="var(--phosphor)" font-family="var(--font-mono)" font-size="10" font-weight="700" text-anchor="middle">3kg @ 24V ✓</text>
+          <text x="617" y="55" fill="var(--phosphor)" font-family="var(--font-mono)" font-size="10" font-weight="700" text-anchor="middle">44.30N (OK)</text>
+
+          <!-- Group 6: 3 kg target @ 36V -->
+          <rect x="690" y="68" width="35" height="212" fill="var(--amber-dim)" opacity="0.6"/>
+          <rect x="730" y="69" width="35" height="211" fill="var(--signal-red)" opacity="0.8"/>
+          <text x="727" y="300" fill="var(--ink-secondary)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">3kg @ 36V</text>
+          <text x="727" y="58" fill="var(--signal-red)" font-family="var(--font-mono)" font-size="10" text-anchor="middle">43.96N (LOW)</text>
+        </svg>
+      </div>
+
+      <div class="chart-summary-note mono">
+        <p>
+          <strong>Analytical Conclusion:</strong> Only the <strong>24 V supply configuration</strong> satisfies the required force threshold under full duty cycle (+0.16 N surplus at 2 kg, +0.15 N surplus at 3 kg). At 12 V and 36 V, thermal dissipation and resistive wire limitations prevent the coil from achieving the target pull force.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.em-section {
+  border-top: 1px solid var(--graticule);
+}
+
+.section-heading {
+  margin-bottom: var(--space-4);
+}
+
+.section-desc {
+  max-width: 65ch;
+  color: var(--ink-secondary);
+  margin-bottom: var(--space-10);
+}
+
+.em-top-grid {
+  margin-bottom: var(--space-8);
+}
+
+.panel-heading {
+  font-size: var(--text-sm);
+  color: var(--phosphor-dim);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-4);
+}
+
+.equation-box {
+  background: var(--glass-deep);
+  border: 1px solid var(--glass-border);
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+  text-align: center;
+}
+
+.equation-text {
+  font-size: var(--text-base);
+  color: var(--ink-primary);
+  font-weight: 700;
+  display: block;
+}
+
+.panel-subtext {
+  font-size: var(--text-sm);
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.safety-factor-tag {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.safety-text {
+  font-size: var(--text-xs);
+  color: var(--ink-caption);
+}
+
+/* Core bars */
+.core-comparison-bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.core-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.core-bar-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+}
+
+.core-bar-item--selected .core-name {
+  color: var(--phosphor);
+}
+
+.core-progress-track {
+  height: 6px;
+  background: var(--graticule-mid);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.core-progress-fill {
+  height: 100%;
+  background: var(--ink-secondary);
+  border-radius: 3px;
+}
+
+.core-bar-item--selected .core-progress-fill {
+  background: var(--phosphor);
+  box-shadow: 0 0 8px var(--phosphor);
+}
+
+.core-pros-cons {
+  font-size: 0.7rem;
+  color: var(--ink-caption);
+}
+
+/* Chart Panel */
+.chart-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.chart-subhead {
+  font-size: var(--text-xs);
+  color: var(--ink-secondary);
+  font-family: var(--font-mono);
+  margin-bottom: 0;
+}
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--text-xs);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.legend-dot--produced { background: var(--phosphor); }
+.legend-dot--required { background: var(--amber-dim); opacity: 0.6; }
+
+.chart-svg-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--glass-panel);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+}
+
+.chart-svg {
+  width: 100%;
+  min-width: 600px;
+  height: auto;
+  display: block;
+}
+
+.chart-summary-note {
+  font-size: var(--text-xs);
+  color: var(--ink-secondary);
+  line-height: 1.6;
+}
+</style>

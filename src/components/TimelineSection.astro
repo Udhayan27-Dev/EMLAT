@@ -1,0 +1,242 @@
+---
+import timeline from '../content/timeline.json';
+
+function getBadgeClass(status: string) {
+  switch (status.toLowerCase()) {
+    case 'completed': return 'badge--completed';
+    case 'in progress': return 'badge--inprogress';
+    case 'stuck': return 'badge--stuck';
+    default: return 'badge--yettostart';
+  }
+}
+---
+
+<section class="section timeline-section graticule-bg" id="timeline" aria-labelledby="timeline-title">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">06 // Engineering Roadmap</span>
+      <h2 id="timeline-title" class="section-heading">Project Timeline & Workstream Status</h2>
+      <p class="section-desc">
+        Real progress tracking across four active development tracks from mid-August through end-November 2026. Every status is reported directly from the engineering backlog without artificial completion inflation.
+      </p>
+    </div>
+
+    <!-- Workstream Roadmap -->
+    <div class="workstreams-wrap reveal">
+      {timeline.workstreams.map((ws) => (
+        <div class="panel workstream-panel">
+          <div class="ws-header">
+            <div class="ws-title-group">
+              <span class="ws-id mono">STREAM {ws.id}</span>
+              <h3 class="ws-name">{ws.label}</h3>
+            </div>
+            <span class={`badge ${getBadgeClass(ws.status)}`}>{ws.status}</span>
+          </div>
+
+          <!-- Modules under this workstream -->
+          <div class="modules-grid">
+            {ws.modules.map((m) => (
+              <div class="module-card">
+                <div class="module-header">
+                  <span class="module-name mono">{m.id}: {m.name}</span>
+                  <span class={`badge ${getBadgeClass(m.status)}`}>{m.status}</span>
+                </div>
+
+                <div class="tasks-mini-list">
+                  {m.tasks.map((t) => (
+                    <div class="task-row">
+                      <span class={`task-indicator ${getBadgeClass(t.status)}`}></span>
+                      <span class="task-name">{t.name}</span>
+                      <span class="task-state mono">{t.status}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Supporting Work & Simulation Callout -->
+    <div class="panel supporting-panel reveal">
+      <h3 class="panel-heading mono">// Supporting Studies & Simulation Experiments</h3>
+      <div class="grid-4 supporting-grid">
+        {timeline.supportingWork.map((sw) => (
+          <div class="supporting-item">
+            <div class="sw-header">
+              <span class="sw-name mono">{sw.name}</span>
+              <span class={`badge ${getBadgeClass(sw.status)}`}>{sw.status}</span>
+            </div>
+            <p class="sw-note">{sw.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.timeline-section {
+  border-top: 1px solid var(--graticule);
+}
+
+.section-heading {
+  margin-bottom: var(--space-4);
+}
+
+.section-desc {
+  max-width: 65ch;
+  color: var(--ink-secondary);
+  margin-bottom: var(--space-10);
+}
+
+.workstreams-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.workstream-panel {
+  padding: var(--space-6);
+}
+
+.ws-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--graticule);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.ws-id {
+  font-size: var(--text-xs);
+  color: var(--phosphor-dim);
+  display: block;
+  letter-spacing: 0.1em;
+}
+
+.ws-name {
+  font-size: var(--text-lg);
+  color: var(--ink-primary);
+  margin-bottom: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .modules-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.module-card {
+  background: var(--glass-panel);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+  gap: var(--space-2);
+}
+
+.module-name {
+  font-size: var(--text-xs);
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.tasks-mini-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.task-row {
+  display: grid;
+  grid-template-columns: 10px 1fr auto;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+}
+
+.task-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.task-name {
+  color: var(--ink-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-state {
+  font-size: 0.65rem;
+  color: var(--ink-caption);
+}
+
+/* Supporting Panel */
+.supporting-panel {
+  padding: var(--space-6);
+}
+
+.panel-heading {
+  font-size: var(--text-sm);
+  color: var(--phosphor);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-4);
+}
+
+.supporting-grid {
+  gap: var(--space-4);
+}
+
+.supporting-item {
+  background: var(--glass-black);
+  border: 1px solid var(--graticule-mid);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+}
+
+.sw-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+  gap: var(--space-2);
+}
+
+.sw-name {
+  font-size: var(--text-xs);
+  color: var(--ink-primary);
+  font-weight: 600;
+}
+
+.sw-note {
+  font-size: 0.75rem;
+  color: var(--ink-caption);
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+</style>

@@ -1,0 +1,120 @@
+{
+  "conceptScores": [
+    {
+      "architecture": "PM mover + EM stator track",
+      "score": 73,
+      "winner": true,
+      "description": "Passive permanent-magnet carriage on caster wheels; track electromagnets provide lift assistance and bidirectional propulsion. Moderate control complexity, excellent scalability."
+    },
+    {
+      "architecture": "PM both sides",
+      "score": 60,
+      "winner": false,
+      "description": "Permanent magnets on both mover and track. Simple mechanically, but no active motion control is inherent — cannot provide bidirectional drive by itself."
+    },
+    {
+      "architecture": "EM mover + PM track",
+      "score": 56,
+      "winner": false,
+      "description": "Electromagnets on the moving carriage, permanent-magnet track. Power must travel with the carriage over the full 3 m, increasing wiring and thermal complexity."
+    },
+    {
+      "architecture": "EM both sides",
+      "score": 52,
+      "winner": false,
+      "description": "Electromagnets on both mover and track. Highest controllability but multiple interacting circuits require coordinated control and the most power and guarding hardware."
+    }
+  ],
+  "conceptCriteria": [
+    { "criterion": "Controllability", "winner": 3, "em_carriage_track": 2, "em_both": 1, "pm_both": 3 },
+    { "criterion": "Current draw", "winner": 2, "em_carriage_track": 2, "em_both": 2, "pm_both": 3 },
+    { "criterion": "Heat generation", "winner": 2, "em_carriage_track": 1, "em_both": 1, "pm_both": 3 },
+    { "criterion": "Safety", "winner": 3, "em_carriage_track": 2, "em_both": 2, "pm_both": 2 },
+    { "criterion": "Scalability", "winner": 3, "em_carriage_track": 2, "em_both": 2, "pm_both": 3 },
+    { "criterion": "Payload suitability", "winner": 3, "em_carriage_track": 2, "em_both": 3, "pm_both": 2 },
+    { "criterion": "Back-and-forth operation", "winner": 3, "em_carriage_track": 3, "em_both": 3, "pm_both": 1 },
+    { "criterion": "Thrust generation", "winner": 3, "em_carriage_track": 2, "em_both": 3, "pm_both": 1 },
+    { "criterion": "Control complexity", "winner": 2, "em_carriage_track": 2, "em_both": 1, "pm_both": 3 }
+  ],
+  "coreComparison": [
+    {
+      "core": "C-Core",
+      "score": 4.23,
+      "winner": true,
+      "strengths": ["Lowest flux leakage", "Highest thrust per watt", "Precise air-gap control"],
+      "weaknesses": ["Harder to source", "Demanding assembly (mating halves)"],
+      "prototypeChoice": false
+    },
+    {
+      "core": "E-Core",
+      "score": 4.13,
+      "winner": false,
+      "strengths": ["Easiest to manufacture", "Widely available", "Simple winding"],
+      "weaknesses": ["More flux leakage than C-core"],
+      "prototypeChoice": true,
+      "prototypeNote": "Prototype uses E-30 E-cores (30 × 15 × 6.7 mm)"
+    },
+    {
+      "core": "U-Core",
+      "score": 3.95,
+      "winner": false,
+      "strengths": ["Simple two-leg arrangement", "Open coil for cooling"],
+      "weaknesses": ["Same flux leakage as E-core without matching its availability advantage"],
+      "prototypeChoice": false
+    }
+  ],
+  "forceModel": {
+    "equation": "F = (N·I)² · μ₀ · A_pole / (2 · gap²)",
+    "safetyFactor": 1.5,
+    "notes": "Pull force model: electromagnet pulling an onboard permanent magnet across an air gap. Safety factor of 1.5 covers friction and acceleration margin."
+  },
+  "voltageComparison": [
+    { "weight_kg": 2, "voltage_V": 12, "required_N": 29.43, "produced_N": 29.42, "status": "LOW",  "ok": false },
+    { "weight_kg": 2, "voltage_V": 24, "required_N": 29.43, "produced_N": 29.59, "status": "OK",   "ok": true  },
+    { "weight_kg": 2, "voltage_V": 36, "required_N": 29.43, "produced_N": 29.26, "status": "LOW",  "ok": false },
+    { "weight_kg": 3, "voltage_V": 12, "required_N": 44.15, "produced_N": 44.02, "status": "LOW",  "ok": false },
+    { "weight_kg": 3, "voltage_V": 24, "required_N": 44.15, "produced_N": 44.30, "status": "OK",   "ok": true  },
+    { "weight_kg": 3, "voltage_V": 36, "required_N": 44.15, "produced_N": 43.96, "status": "LOW",  "ok": false }
+  ],
+  "designTarget_kg": 2,
+  "validationPayload_kg": 1.0,
+  "electronics": [
+    { "component": "STM32 Black Pill", "role": "Main controller — reads sensors, drives coil switching sequence" },
+    { "component": "Dual H-Bridge Drivers (×3)", "role": "Controls current direction through coils; 24 V rated, ≥2 A continuous per channel" },
+    { "component": "Hall-Effect Sensors (×3–6)", "role": "Position sensing — detects mover location for commutation" },
+    { "component": "Current Sensors (×3–6)", "role": "Coil current measurement; overcurrent detection" },
+    { "component": "NTC Thermistors (×3)", "role": "Coil temperature monitoring; over-temperature protection" },
+    { "component": "24 V → 5 V Buck Converter", "role": "Power for STM32 and 5 V electronics" },
+    { "component": "50 A Fuse", "role": "Circuit protection against excessive current or short circuits" },
+    { "component": "Main ON/OFF Switch", "role": "Safe system power disconnect" },
+    { "component": "DC Distribution Terminal Block", "role": "Safe 24 V distribution to coil drivers" },
+    { "component": "Capacitor Bank", "role": "Inrush current buffering on bus start-up" },
+    { "component": "Emergency Stop", "role": "Hardware E-stop interrupt" }
+  ],
+  "firmware": [
+    "PID closed-loop current regulation",
+    "PWM driver interface",
+    "Hall-sensor position decoding",
+    "Sequential zone-switching commutation",
+    "Direction-aware bidirectional motion",
+    "Acceleration/deceleration profiling",
+    "Hardware E-stop interrupt",
+    "Over-temperature and limit-switch handling",
+    "Watchdog timer",
+    "UART/CAN telemetry and logging"
+  ],
+  "mechanical": [
+    "Modular aluminium-extrusion track (3 m total)",
+    "3D-printed coil bobbins",
+    "Carrier chassis with caster wheels",
+    "Lift target plate (mild steel)",
+    "2–3 mm air-gap tolerance",
+    "Bump-stops and limit switches at both ends"
+  ],
+  "budget": {
+    "total_INR": 5750,
+    "existing_inventory_INR": 2550,
+    "new_purchase_INR": 3200,
+    "line_items": 14
+  }
+}

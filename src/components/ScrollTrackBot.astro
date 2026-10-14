@@ -1,0 +1,426 @@
+---
+---
+
+<div class="fixed-track-container" id="fixed-scroll-track" role="region" aria-label="3-metre linear track travel indicator">
+  <div class="track-wrapper">
+    <!-- 30 Stator Coils distributed across the full track -->
+    <div class="stator-rail" id="stator-rail">
+      <div class="rail-glow-line" id="rail-glow-line"></div>
+      <div class="coils-array" id="coils-array">
+        {Array.from({ length: 30 }).map((_, i) => (
+          <div 
+            class={`coil-tick ${i === 0 ? 'tick-major tick-a' : i === 14 ? 'tick-major tick-b' : i === 29 ? 'tick-major tick-c' : ''}`}
+            data-coil-idx={i}
+            title={`Coil ${i + 1} (${((i / 29) * 3).toFixed(2)} m)`}
+          >
+            <span class="coil-bar"></span>
+          </div>
+        ))}
+      </div>
+
+      <!-- Moving Bot Carrier -->
+      <div class="carrier-bot" id="carrier-bot" aria-hidden="true">
+        <!-- Expanding Magnetic Flux Field Ring -->
+        <div class="field-pulse ring-1"></div>
+        <div class="field-pulse ring-2"></div>
+
+        <!-- Mover Chassis with N and S Permanent Magnets -->
+        <div class="bot-chassis">
+          <span class="magnet-pole pole-north" title="North Pole">N</span>
+          <div class="bot-core">
+            <span class="bot-status-led"></span>
+          </div>
+          <span class="magnet-pole pole-south" title="South Pole">S</span>
+        </div>
+
+        <!-- Caster Wheels underneath -->
+        <div class="bot-wheels">
+          <span class="wheel wheel-left"></span>
+          <span class="wheel wheel-right"></span>
+        </div>
+
+        <!-- Real-time Position & Active Coil Telemetry Tag -->
+        <div class="bot-tag mono">
+          <span class="tag-dist" id="bot-dist-readout">0.00 m</span>
+          <span class="tag-coil" id="bot-coil-readout">COIL #01</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Station Distance Callouts (Full Width: 0.0m to 3.0m) -->
+    <div class="track-stations-row mono">
+      <div class="station-mark station-start">
+        <span class="station-indicator"></span>
+        <span class="station-label">PT A · 0.0m</span>
+      </div>
+      <div class="station-mark station-mid">
+        <span class="station-indicator"></span>
+        <span class="station-label">PT B · 1.5m</span>
+      </div>
+      <div class="station-mark station-end">
+        <span class="station-indicator"></span>
+        <span class="station-label">PT C · 3.0m</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Full width fixed horizontal slider track below navbar */
+.fixed-track-container {
+  position: fixed;
+  top: 3.5rem; /* Directly beneath fixed navbar */
+  left: 0;
+  right: 0;
+  width: 100vw;
+  z-index: 95;
+  background: color-mix(in srgb, #ffffff 92%, var(--glass-deep));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0.45rem 1.5rem 0.35rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.track-wrapper {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Stator Rail Line */
+.stator-rail {
+  position: relative;
+  width: 100%;
+  height: 26px;
+  display: flex;
+  align-items: center;
+}
+
+/* Structural extrusion backing */
+.stator-rail::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--graticule-mid);
+  border-radius: 2px;
+  z-index: 1;
+}
+
+/* Dynamic energized propulsion trace line */
+.rail-glow-line {
+  position: absolute;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background: linear-gradient(90deg, #0f766e, var(--phosphor));
+  box-shadow: 0 0 8px rgba(13, 148, 136, 0.4);
+  border-radius: 2px;
+  z-index: 2;
+  transition: width 0.06s linear;
+}
+
+/* 30 Stator Coils array across full width */
+.coils-array {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.coil-tick {
+  width: 8px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coil-bar {
+  width: 3px;
+  height: 8px;
+  background: var(--graticule-mid);
+  border-radius: 1px;
+  transition: background 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* Station milestones A, B, C tick bars */
+.tick-major .coil-bar {
+  width: 4px;
+  height: 14px;
+  background: var(--amber);
+}
+
+/* Active energized coil status under bot */
+.coil-tick.coil-active .coil-bar {
+  background: var(--phosphor);
+  box-shadow: 0 0 10px 2px rgba(13, 148, 136, 0.5);
+  transform: scaleY(1.4);
+}
+
+.coil-tick.coil-adjacent .coil-bar {
+  background: #2dd4bf;
+  box-shadow: 0 0 6px rgba(45, 212, 191, 0.4);
+}
+
+/* Carrier Bot Mover */
+.carrier-bot {
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  transition: left 0.06s linear;
+  will-change: left;
+}
+
+/* Expanding Electromagnetic Flux rings */
+.field-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ring-1 {
+  width: 44px;
+  height: 32px;
+  border: 1.5px solid var(--phosphor);
+  opacity: 0.7;
+  animation: bot-flux 1.8s ease-out infinite;
+}
+
+.ring-2 {
+  width: 62px;
+  height: 44px;
+  border: 1px dashed var(--phosphor-dim);
+  opacity: 0.4;
+  animation: bot-flux 1.8s ease-out 0.6s infinite;
+}
+
+@keyframes bot-flux {
+  0% { transform: translate(-50%, -50%) scale(0.65); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(1.35); opacity: 0; }
+}
+
+/* Chassis */
+.bot-chassis {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1.5px solid var(--phosphor);
+  border-radius: 4px;
+  padding: 1px 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  gap: 2px;
+  position: relative;
+  z-index: 2;
+}
+
+.magnet-pole {
+  width: 9px;
+  height: 14px;
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1px;
+  color: #fff;
+  line-height: 1;
+}
+
+.pole-north {
+  background: #d83030;
+}
+
+.pole-south {
+  background: #2060d8;
+}
+
+.bot-core {
+  width: 14px;
+  height: 12px;
+  background: #182618;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1px;
+}
+
+.bot-status-led {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 6px var(--amber);
+  animation: led-blink 1s ease-in-out infinite;
+}
+
+@keyframes led-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Wheels */
+.bot-wheels {
+  display: flex;
+  justify-content: space-between;
+  width: 28px;
+  margin-top: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+.wheel {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ink-secondary);
+}
+
+/* Floating Telemetry Tag */
+.bot-tag {
+  position: absolute;
+  top: 29px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: color-mix(in srgb, var(--glass-black) 96%, var(--phosphor) 4%);
+  border: 1px solid var(--graticule-mid);
+  border-radius: 2px;
+  padding: 1px 4px;
+  white-space: nowrap;
+  font-size: 8px;
+  line-height: 1.2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.tag-dist {
+  color: var(--amber);
+  font-weight: 700;
+}
+
+.tag-coil {
+  color: var(--phosphor-dim);
+  font-size: 7px;
+}
+
+/* Station milestones row */
+.track-stations-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 8.5px;
+  color: var(--ink-caption);
+  margin-top: 2px;
+}
+
+.station-mark {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.station-indicator {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--amber-dim);
+  box-shadow: 0 0 4px var(--amber-glow);
+}
+
+.station-label {
+  color: var(--ink-secondary);
+}
+
+@media (max-width: 640px) {
+  .fixed-track-container {
+    padding-inline: 0.75rem;
+  }
+  .bot-tag {
+    display: none; /* keep clean on narrow mobile viewports */
+  }
+}
+</style>
+
+<script>
+  function initLinearTrackBot() {
+    const railGlow = document.getElementById('rail-glow-line');
+    const carrier = document.getElementById('carrier-bot');
+    const distText = document.getElementById('bot-dist-readout');
+    const coilText = document.getElementById('bot-coil-readout');
+    const coilTicks = document.querySelectorAll<HTMLElement>('.coil-tick');
+
+    if (!carrier || !railGlow || coilTicks.length === 0) return;
+
+    let ticking = false;
+
+    function handleScroll() {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+      
+      const ratio = scrollMax > 0 ? Math.min(Math.max(scrollY / scrollMax, 0), 1) : 0;
+      const percent = ratio * 100;
+
+      // Update horizontal active track line & bot position
+      railGlow.style.width = `${percent}%`;
+      carrier.style.left = `${percent}%`;
+
+      // 3.0 m track distance calculation
+      const dist = (ratio * 3.0).toFixed(2);
+      if (distText) distText.textContent = `${dist} m`;
+
+      // 30 coils calculation (0 to 29)
+      const activeIdx = Math.min(Math.floor(ratio * 30), 29);
+      if (coilText) {
+        const paddedCoil = String(activeIdx + 1).padStart(2, '0');
+        coilText.textContent = `COIL #${paddedCoil}`;
+      }
+
+      // Update active electromagnetic coil illumination
+      coilTicks.forEach((tick, idx) => {
+        const offset = Math.abs(idx - activeIdx);
+        if (offset === 0) {
+          tick.classList.add('coil-active');
+          tick.classList.remove('coil-adjacent');
+        } else if (offset === 1) {
+          tick.classList.add('coil-adjacent');
+          tick.classList.remove('coil-active');
+        } else {
+          tick.classList.remove('coil-active', 'coil-adjacent');
+        }
+      });
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(handleScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    handleScroll();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLinearTrackBot);
+  } else {
+    initLinearTrackBot();
+  }
+</script>

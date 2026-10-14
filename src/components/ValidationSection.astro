@@ -1,0 +1,585 @@
+---
+import validation from '../content/validation.json';
+---
+
+<section class="section validation-section graticule-bg" id="validation" aria-labelledby="validation-title">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">05 // Verification & Validation</span>
+      <h2 id="validation-title" class="section-heading">Validation Plan & Performance Targets</h2>
+      <p class="section-desc">
+        All hardware test procedures are formalized with quantitative thresholds across four test cases. 
+        <strong class="target-note">Status: Tests are currently planned and pending final hardware commissioning. Numbers shown are strict engineering targets, not achieved results.</strong>
+      </p>
+    </div>
+
+    <!-- 3-Metre Track Schematic with Points A, B, C -->
+    <div class="panel track-graphic-panel reveal">
+      <h3 class="panel-heading mono">// 3-Metre Linear Track Test Reference</h3>
+
+      <div class="track-schematic">
+        <!-- Physical track bar -->
+        <div class="track-line-wrapper">
+          <div class="track-rail">
+            <!-- Animated Section Track Mover Bot -->
+            <div class="section-mover-bot" id="section-mover-bot">
+              <div class="section-bot-field"></div>
+              <div class="section-bot-body">
+                <span class="pole pole-n">N</span>
+                <span class="pole-plate"></span>
+                <span class="pole pole-s">S</span>
+              </div>
+              <div class="section-bot-tag mono" id="section-bot-tag">0.0 m</div>
+            </div>
+
+            <div class="track-stations">
+              <!-- Point A -->
+              <div class="station-mark station-a">
+                <div class="station-pin"></div>
+                <div class="station-info">
+                  <span class="station-letter mono">POINT A</span>
+                  <span class="station-coord mono">0.0 m</span>
+                  <span class="station-role">Home / Origin</span>
+                </div>
+              </div>
+
+              <!-- Point B -->
+              <div class="station-mark station-b">
+                <div class="station-pin"></div>
+                <div class="station-info">
+                  <span class="station-letter mono">POINT B</span>
+                  <span class="station-coord mono">1.5 m</span>
+                  <span class="station-role">Mid Station Hold</span>
+                </div>
+              </div>
+
+              <!-- Point C -->
+              <div class="station-mark station-c">
+                <div class="station-pin"></div>
+                <div class="station-info">
+                  <span class="station-letter mono">POINT C</span>
+                  <span class="station-coord mono">3.0 m</span>
+                  <span class="station-role">End Terminal</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="track-meta mono">
+          <span>Stator Coils: 30 Units Distributed @ 100mm Pitch</span>
+          <span>Payload Specification: 1.0 kg Test Mass</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 Test Cases Grid -->
+    <div class="grid-2 test-cases-grid reveal">
+      {validation.testCases.map((tc) => (
+        <div class="panel test-case-card">
+          <div class="tc-header">
+            <div>
+              <span class="tc-id mono">{tc.id}</span>
+              <h3 class="tc-title">{tc.title}</h3>
+            </div>
+            <span class="badge badge--pending">{tc.status}</span>
+          </div>
+
+          <p class="tc-desc">{tc.description}</p>
+
+          <div class="tc-criteria">
+            <h4 class="criteria-header mono">// Acceptance Criteria Targets</h4>
+            <ul class="criteria-list">
+              {tc.criteria.map((c) => (
+                <li class="criteria-item">
+                  <span class="metric-name">{c.metric}</span>
+                  <span class="metric-target mono">{c.target}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Active Hardware Bench Testing Videos (from Video Folder) -->
+    <div class="testing-media-wrap reveal">
+      <div class="testing-header">
+        <div>
+          <span class="section-label">// EMPIRICAL BENCH VERIFICATION</span>
+          <h3 class="testing-title mono">Subsystem Testing & Experimental Validation Runs</h3>
+          <p class="testing-sub mono">
+            Laboratory bring-up testing of individual subsystems prior to 3-metre track integration: optical line sensor tracking array, high-power H-bridge dual-motor drive stages, and multi-channel telemetry dashboard.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-3 testing-videos-grid">
+        <!-- Video 1: Sensor Array Testing -->
+        <div class="panel testing-card">
+          <div class="testing-video-box">
+            <video
+              class="testing-video"
+              src="/media/videos/testing-sensor-track.mp4"
+              poster="/media/images/testing-sensor-track-poster.jpg"
+              controls
+              playsinline
+              preload="metadata"
+            ></video>
+          </div>
+          <div class="testing-meta">
+            <span class="badge badge--completed">Bench Verified</span>
+            <h4 class="testing-card-title">Sensor Track & Target Detection</h4>
+            <p class="testing-card-desc mono">
+              Multi-point optical sensor array verification testing target tracking and sequential activation response along the carriage guide line.
+            </p>
+          </div>
+        </div>
+
+        <!-- Video 2: Motor Driver Testing -->
+        <div class="panel testing-card">
+          <div class="testing-video-box">
+            <video
+              class="testing-video"
+              src="/media/videos/testing-motor-driver.mp4"
+              poster="/media/images/testing-motor-driver-poster.jpg"
+              controls
+              playsinline
+              preload="metadata"
+            ></video>
+          </div>
+          <div class="testing-meta">
+            <span class="badge badge--completed">Bench Verified</span>
+            <h4 class="testing-card-title">Dual H-Bridge Driver Stage Test</h4>
+            <p class="testing-card-desc mono">
+              Benchtop testing of H-bridge power driver circuitry under SMPS power bus, verifying bidirectional current control and motor commutations.
+            </p>
+          </div>
+        </div>
+
+        <!-- Video 3: Telemetry Dashboard -->
+        <div class="panel testing-card">
+          <div class="testing-video-box">
+            <video
+              class="testing-video"
+              src="/media/videos/testing-telemetry-dashboard.mp4"
+              poster="/media/images/testing-telemetry-dashboard-poster.jpg"
+              controls
+              playsinline
+              preload="metadata"
+            ></video>
+          </div>
+          <div class="testing-meta">
+            <span class="badge badge--completed">Bench Verified</span>
+            <h4 class="testing-card-title">Real-Time Telemetry Dashboard</h4>
+            <p class="testing-card-desc mono">
+              Live multi-channel telemetry acquisition interface capturing sensor states, transition events, and diagnostic logs in real time.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.validation-section {
+  border-top: 1px solid var(--graticule);
+}
+
+.section-heading {
+  margin-bottom: var(--space-4);
+}
+
+.section-desc {
+  max-width: 70ch;
+  color: var(--ink-secondary);
+  margin-bottom: var(--space-10);
+}
+
+.target-note {
+  color: var(--amber);
+  display: block;
+  margin-top: var(--space-2);
+}
+
+.panel-heading {
+  font-size: var(--text-sm);
+  color: var(--phosphor);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-6);
+}
+
+.track-graphic-panel {
+  margin-bottom: var(--space-8);
+  padding: var(--space-8) var(--space-6);
+}
+
+.track-line-wrapper {
+  padding: var(--space-10) var(--space-4) var(--space-8);
+  position: relative;
+}
+
+.track-rail {
+  height: 4px;
+  background: var(--graticule-mid);
+  position: relative;
+  border-radius: 2px;
+}
+
+.track-stations {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: -8px;
+}
+
+.station-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.station-pin {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--phosphor);
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.station-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--space-3);
+  text-align: center;
+}
+
+.station-letter {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--phosphor);
+}
+
+.station-coord {
+  font-size: var(--text-xs);
+  color: var(--amber);
+}
+
+.station-role {
+  font-size: 0.7rem;
+  color: var(--ink-caption);
+  margin-top: 2px;
+}
+
+.track-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: var(--ink-caption);
+  border-top: 1px solid var(--graticule);
+  padding-top: var(--space-4);
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.test-cases-grid {
+  gap: var(--space-6);
+}
+
+.test-case-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.tc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-3);
+  gap: var(--space-4);
+}
+
+.tc-id {
+  font-size: var(--text-xs);
+  color: var(--phosphor-dim);
+  display: block;
+  letter-spacing: 0.1em;
+}
+
+.tc-title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--ink-primary);
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: normal;
+  margin-bottom: 0;
+}
+
+.tc-desc {
+  font-size: var(--text-xs);
+  color: var(--ink-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--space-4);
+}
+
+.tc-criteria {
+  background: var(--glass-black);
+  border: 1px solid var(--graticule);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  margin-top: auto;
+}
+
+.criteria-header {
+  font-size: 0.7rem;
+  color: var(--ink-caption);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-2);
+}
+
+.criteria-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.criteria-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  padding-block: 2px;
+  border-bottom: 1px solid var(--graticule);
+}
+
+.criteria-item:last-child {
+  border-bottom: none;
+}
+
+.metric-name {
+  color: var(--ink-secondary);
+}
+
+.metric-target {
+  color: var(--amber);
+  font-weight: 600;
+}
+
+/* Testing Videos Section */
+.testing-media-wrap {
+  margin-top: var(--space-12);
+  border-top: 1px solid var(--graticule);
+  padding-top: var(--space-8);
+}
+
+.testing-header {
+  margin-bottom: var(--space-6);
+}
+
+.testing-title {
+  font-size: var(--text-lg);
+  color: var(--phosphor);
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-2);
+}
+
+.testing-sub {
+  font-size: var(--text-xs);
+  color: var(--ink-secondary);
+  max-width: 80ch;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.testing-videos-grid {
+  gap: var(--space-6);
+}
+
+.testing-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border-color: var(--glass-border);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.testing-card:hover {
+  border-color: var(--phosphor-dim);
+  transform: translateY(-2px);
+}
+
+.testing-video-box {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  max-height: 340px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.testing-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.testing-meta {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.testing-card-title {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0;
+}
+
+.testing-card-desc {
+  font-size: 0.72rem;
+  color: var(--ink-caption);
+  line-height: 1.45;
+  margin-bottom: 0;
+}
+
+/* Section Mover Bot */
+.section-mover-bot {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  transition: left 0.1s ease-out;
+}
+
+.section-bot-field {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px dashed var(--phosphor);
+  opacity: 0.5;
+  animation: field-expand 1.6s ease-out infinite;
+}
+
+@keyframes field-expand {
+  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
+}
+
+.section-bot-body {
+  display: flex;
+  align-items: center;
+  background: var(--glass-black);
+  border: 1.5px solid var(--phosphor);
+  border-radius: 4px;
+  padding: 2px 4px;
+  box-shadow: 0 0 14px var(--phosphor-glow);
+  gap: 3px;
+  position: relative;
+  z-index: 2;
+}
+
+.pole {
+  width: 10px;
+  height: 16px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  color: #fff;
+}
+
+.pole-n { background: #d83030; }
+.pole-s { background: #2060d8; }
+
+.pole-plate {
+  width: 14px;
+  height: 12px;
+  background: var(--graticule-mid);
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.section-bot-tag {
+  font-size: 9px;
+  color: var(--amber);
+  background: var(--glass-black);
+  border: 1px solid var(--graticule);
+  padding: 1px 4px;
+  border-radius: 2px;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+</style>
+
+<script>
+  function setupSectionTrackBot() {
+    const secBot = document.getElementById('section-mover-bot');
+    const secTag = document.getElementById('section-bot-tag');
+    const valSection = document.getElementById('validation');
+
+    if (!secBot || !valSection) return;
+
+    let ticking = false;
+
+    function onScroll() {
+      const rect = valSection.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Calculate progress while validation section is in viewport
+      const start = windowHeight;
+      const end = -rect.height;
+      const current = rect.top;
+
+      const progress = Math.min(Math.max((start - current) / (start - end), 0), 1);
+      const percentage = progress * 100;
+
+      secBot.style.left = `${percentage}%`;
+      if (secTag) {
+        secTag.textContent = `${(progress * 3.0).toFixed(2)} m`;
+      }
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    onScroll();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupSectionTrackBot);
+  } else {
+    setupSectionTrackBot();
+  }
+</script>

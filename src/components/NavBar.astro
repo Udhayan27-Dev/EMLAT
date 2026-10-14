@@ -1,0 +1,197 @@
+---
+interface NavItem {
+  href: string;
+  label: string;
+}
+
+const navItems: NavItem[] = [
+  { href: '#problem', label: 'Problem' },
+  { href: '#architecture', label: 'Architecture' },
+  { href: '#electromagnetics', label: 'Electromagnetics' },
+  { href: '#system', label: 'System' },
+  { href: '#validation', label: 'Validation' },
+  { href: '#timeline', label: 'Timeline' },
+  { href: '#gallery', label: 'Gallery' },
+  { href: '#team', label: 'Team' },
+];
+---
+
+<header class="nav" id="nav" role="banner">
+  <div class="nav__inner container">
+    <a href="#" class="nav__brand" aria-label="Electromagnetic Lift-Assisted Transport — back to top">
+      <span class="nav__brand-text">EL·AT</span>
+    </a>
+
+    <button class="nav__toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Open navigation menu">
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+
+    <nav class="nav__menu" id="nav-menu" role="navigation" aria-label="Main navigation">
+      <ul class="nav__list" role="list">
+        {navItems.map(item => (
+          <li class="nav__item">
+            <a href={item.href} class="nav__link">{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  background: color-mix(in srgb, var(--glass-black) 90%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--graticule);
+  transition: background var(--transition-mid);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3.5rem;
+}
+
+.nav__brand {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.nav__brand-text {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--phosphor);
+  text-shadow: var(--glow-text);
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
+}
+
+.nav__link {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.nav__link:hover {
+  color: var(--phosphor);
+  background: var(--phosphor-glow);
+  text-decoration: none;
+}
+
+/* Mobile toggle */
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid var(--graticule-mid);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2);
+  cursor: pointer;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.nav__toggle-bar {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--phosphor-dim);
+  transition: transform var(--transition-mid), opacity var(--transition-fast);
+}
+
+.nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+.nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .nav__toggle { display: flex; }
+
+  .nav__menu {
+    position: fixed;
+    top: 3.5rem;
+    left: 0;
+    right: 0;
+    background: var(--glass-black);
+    border-bottom: 1px solid var(--graticule);
+    padding: var(--space-4) var(--gutter);
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform var(--transition-mid),
+      opacity var(--transition-mid);
+  }
+
+  .nav__menu.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .nav__list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .nav__link {
+    display: block;
+    width: 100%;
+    padding: var(--space-3) var(--space-2);
+    font-size: var(--text-sm);
+  }
+}
+</style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-menu');
+  const links = menu?.querySelectorAll('.nav__link');
+
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    menu?.classList.toggle('is-open', !expanded);
+  });
+
+  // Close menu when a link is clicked
+  links?.forEach(link => {
+    link.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      menu?.classList.remove('is-open');
+    });
+  });
+</script>

@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": "technical-animation",
+      "type": "video",
+      "src": "/media/videos/technical-animation.mp4",
+      "poster": "/media/images/technical-animation-poster.jpg",
+      "caption": "Blender technical animation showing coil activation sequence along the 3-metre track",
+      "featured": true
+    },
+    {
+      "id": "propulsion-demo",
+      "type": "video",
+      "src": "/media/videos/propulsion-prototype-demo.mp4",
+      "poster": "/media/images/propulsion-demo-poster.jpg",
+      "caption": "Electromagnetic propulsion prototype — early bench demonstration of coil-driven motion"
+    }
+  ]
+}

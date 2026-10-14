@@ -1,0 +1,193 @@
+---
+---
+
+<section class="section problem-section graticule-bg" id="problem" aria-labelledby="problem-title">
+  <div class="container">
+    <div class="problem-grid">
+      <div class="problem-text reveal">
+        <span class="section-label">01 // Problem & Context</span>
+        <h2 id="problem-title" class="section-heading">Contactless Linear Motion for Material Handling</h2>
+        
+        <p class="lead-text">
+          Conventional mechanical linear conveyors rely heavily on continuous friction, lead screws, belts, and mechanical guides. Over extended duty cycles, these mechanisms suffer from wear, particle generation, lubrication breakdown, and mechanical backlash.
+        </p>
+        
+        <p>
+          Our project investigates a <strong>3-metre modular electromagnetic linear transport track</strong> with an active lift-assist subsystem. By utilizing controlled electromagnetic pull to assist normal force on caster wheels while sequentially pulsing drive coils, the carrier achieves smooth, bidirectional transit with reduced rolling resistance and minimal mechanical wear.
+        </p>
+
+        <div class="problem-features">
+          <div class="feature-item">
+            <span class="feature-num mono">01</span>
+            <div>
+              <h3 class="feature-title">Active Lift Assistance</h3>
+              <p class="feature-desc">Targeted 2.0 kg electromagnetic lift force counters payload weight, directly diminishing normal force and friction without loss of tracking stability.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-num mono">02</span>
+            <div>
+              <h3 class="feature-title">Sequential Zone Commutation</h3>
+              <p class="feature-desc">Discrete 30-coil stator array energized via Hall-effect position feedback, applying localized propulsion pulses only when the carrier is in proximity.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-num mono">03</span>
+            <div>
+              <h3 class="feature-title">Modular 3-Metre Architecture</h3>
+              <p class="feature-desc">Aluminium extrusion stator structure segmented into repeatable modules, designed for scalable track lengths and straightforward alignment shimming.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="problem-specs panel panel--phosphor reveal">
+        <h3 class="specs-title mono">// Core Operating Principles</h3>
+        
+        <div class="spec-row">
+          <span class="spec-key mono">Operating Voltage</span>
+          <span class="spec-val mono">24 V DC</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key mono">Track Length</span>
+          <span class="spec-val mono">3.0 Metres (30 Coils)</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key mono">Lift Design Target</span>
+          <span class="spec-val mono">2.0 kg (29.43 N)</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key mono">Validation Payload</span>
+          <span class="spec-val mono">1.0 kg (V&V Spec)</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key mono">Nominal Air Gap</span>
+          <span class="spec-val mono">2.0 – 3.0 mm</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key mono">Motion Control</span>
+          <span class="spec-val mono">Bidirectional Closed-Loop</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-key mono">Controller</span>
+          <span class="spec-val mono">STM32 ARM Cortex-M</span>
+        </div>
+
+        <div class="specs-footer">
+          <span class="badge badge--ok">Design Phase Verified</span>
+          <span class="badge badge--pending">Hardware V&V Pending</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.problem-section {
+  border-top: 1px solid var(--graticule);
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .problem-grid {
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--space-16);
+  }
+}
+
+.section-heading {
+  margin-bottom: var(--space-6);
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+}
+
+.lead-text {
+  font-size: var(--text-lg);
+  color: var(--ink-primary);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.problem-features {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.feature-item {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.feature-num {
+  font-size: var(--text-sm);
+  color: var(--phosphor-dim);
+  border: 1px solid var(--graticule-mid);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+  margin-top: 4px;
+}
+
+.feature-title {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--ink-primary);
+  text-transform: none;
+  letter-spacing: normal;
+  margin-bottom: var(--space-1);
+}
+
+.feature-desc {
+  font-size: var(--text-sm);
+  color: var(--ink-secondary);
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.problem-specs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.specs-title {
+  font-size: var(--text-sm);
+  color: var(--phosphor);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-2);
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--graticule);
+  font-size: var(--text-sm);
+}
+
+.spec-key {
+  color: var(--ink-secondary);
+}
+
+.spec-val {
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.specs-footer {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+</style>

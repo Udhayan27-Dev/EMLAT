@@ -1,0 +1,34 @@
+{
+  "members": [
+    {
+      "name": "Srikanth",
+      "role": "Visionary and Team Lead",
+      "focus": "System architecture, concept selection, project direction",
+      "initials": "SR"
+    },
+    {
+      "name": "Udhayan",
+      "role": "Firmware and Embedded",
+      "focus": "STM32 controller, PID current loop, Hall-sensor position decoding",
+      "initials": "UD"
+    },
+    {
+      "name": "Mithra",
+      "role": "Hardware and Technical",
+      "focus": "Coil winding, core selection, track mechanical design",
+      "initials": "MI"
+    },
+    {
+      "name": "Darshan",
+      "role": "Hardware and Technical",
+      "focus": "Power electronics, H-bridge driver array, schematic design",
+      "initials": "DA"
+    },
+    {
+      "name": "Nirmal",
+      "role": "Design",
+      "focus": "System architecture diagrams, concept animations, documentation",
+      "initials": "NI"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "testPoints": [
+    { "id": "A", "label": "Point A", "position_m": 0.0, "description": "Home / start position" },
+    { "id": "B", "label": "Point B", "position_m": 1.5, "description": "Mid-track hold station" },
+    { "id": "C", "label": "Point C", "position_m": 3.0, "description": "End-track position" }
+  ],
+  "testCases": [
+    {
+      "id": "TC-AMF-001",
+      "title": "Traversal A → B",
+      "description": "Verify motion initiation, coil hand-off, and mid-track holding at Point B under 1.0 kg load.",
+      "status": "PENDING",
+      "criteria": [
+        { "metric": "Motion start", "target": "< 100 ms", "step": "1.1" },
+        { "metric": "SMPS current spike", "target": "< 12 A", "step": "1.1" },
+        { "metric": "Coil duty cycle", "target": "< 15%", "step": "1.2" },
+        { "metric": "Stopping position error", "target": "≤ ±2.0 mm", "step": "1.4" }
+      ]
+    },
+    {
+      "id": "TC-AMF-002",
+      "title": "Traversal B → C",
+      "description": "Verify re-acceleration from station hold, end-stop approach, and physical containment.",
+      "status": "PENDING",
+      "criteria": [
+        { "metric": "Coil temperature", "target": "< 50 °C", "step": "2.2" },
+        { "metric": "Stopping position error", "target": "≤ ±2.0 mm", "step": "2.4" }
+      ]
+    },
+    {
+      "id": "TC-AMF-003",
+      "title": "Full Reversal C → A",
+      "description": "Verify bidirectional polarity switching and full 3-metre continuous reverse travel.",
+      "status": "PENDING",
+      "criteria": [
+        { "metric": "Return speed", "target": "≥ 0.5 m/s", "step": "3.2" },
+        { "metric": "Return-to-home repeatability", "target": "≤ ±1.0 mm", "step": "3.3" }
+      ]
+    },
+    {
+      "id": "TC-AMF-004",
+      "title": "10-Cycle Endurance",
+      "description": "Validate multi-loop continuous reliability and thermal limits under sustained duty.",
+      "status": "PENDING",
+      "criteria": [
+        { "metric": "Loops completed", "target": "10 / 10", "step": "4.1" },
+        { "metric": "Peak coil temperature", "target": "≤ 60 °C", "step": "4.2" },
+        { "metric": "Bus voltage drop", "target": "≤ 5% (≥ 22.8 V)", "step": "4.3" },
+        { "metric": "Peak current", "target": "≤ 16 A", "step": "4.3" }
+      ]
+    }
+  ]
+}

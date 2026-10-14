@@ -1,0 +1,279 @@
+---
+interface HeroStat {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  title: string;
+  subtitle: string;
+  stats: HeroStat[];
+  videoSrc: string;
+  posterSrc: string;
+}
+
+const { title, subtitle, stats, videoSrc, posterSrc } = Astro.props;
+---
+
+<section class="hero graticule-bg" aria-labelledby="hero-title">
+  <div class="hero__video-wrap" aria-hidden="true">
+    <video
+      class="hero__video"
+      src={videoSrc}
+      poster={posterSrc}
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      aria-hidden="true"
+    ></video>
+    <div class="hero__video-overlay"></div>
+  </div>
+
+  <div class="hero__content container">
+    <div class="hero__text">
+      <p class="hero__eyeline mono" aria-hidden="true">
+        <span class="hero__pulse"></span>
+        SIGNAL ACTIVE · CH1 · 24 V DC
+      </p>
+
+      <h1 class="hero__title" id="hero-title">{title}</h1>
+      <p class="hero__subtitle">{subtitle}</p>
+    </div>
+
+    <div class="hero__stats" role="list" aria-label="Key project specifications">
+      {stats.map(stat => (
+        <div class="hero__stat readout reveal" role="listitem">
+          <span class="readout__value">{stat.value}</span>
+          <span class="readout__label">{stat.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <a href="#problem" class="hero__cta" aria-label="Scroll to learn about this project">
+      <span>View the engineering</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Track position indicators (decorative instrument trace) -->
+  <div class="hero__track" aria-hidden="true">
+    <div class="hero__track-bar">
+      <div class="hero__track-fill"></div>
+    </div>
+    <div class="hero__track-labels">
+      <span class="mono">A · 0.0 m</span>
+      <span class="mono">B · 1.5 m</span>
+      <span class="mono">C · 3.0 m</span>
+    </div>
+  </div>
+</section>
+
+<style>
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 3.5rem; /* nav height */
+}
+
+/* Background video */
+.hero__video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.18;
+}
+
+.hero__video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--glass-black) 0%,
+    transparent 25%,
+    transparent 60%,
+    var(--glass-black) 100%
+  );
+}
+
+/* Content */
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--space-24);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.hero__text {
+  max-width: 52rem;
+}
+
+.hero__eyeline {
+  font-size: var(--text-xs);
+  letter-spacing: 0.15em;
+  color: var(--phosphor-dim);
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: none;
+}
+
+.hero__pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--phosphor);
+  box-shadow: 0 0 10px var(--phosphor);
+  animation: hero-pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes hero-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6.5vw, 4.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--ink-primary);
+  margin-bottom: var(--space-6);
+  text-wrap: balance;
+}
+
+.hero__subtitle {
+  font-size: clamp(var(--text-base), 2.2vw, var(--text-xl));
+  color: var(--ink-secondary);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  max-width: 48ch;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Stats row */
+.hero__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.hero__stat {
+  position: relative;
+  padding-right: var(--space-8);
+}
+
+.hero__stat:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  width: 1px;
+  background: var(--graticule-mid);
+}
+
+/* CTA */
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--phosphor-dim);
+  text-decoration: none;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--graticule-mid);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+  width: fit-content;
+}
+
+.hero__cta:hover {
+  color: var(--phosphor);
+  border-color: var(--phosphor-dim);
+  text-decoration: none;
+}
+
+.hero__cta svg {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__cta svg { animation: none; }
+  .hero__pulse { animation: none; }
+}
+
+/* Track animation bar */
+.hero__track {
+  position: absolute;
+  bottom: var(--space-8);
+  left: 0;
+  right: 0;
+  padding-inline: var(--gutter);
+  z-index: 1;
+}
+
+.hero__track-bar {
+  height: 2px;
+  background: var(--graticule-mid);
+  border-radius: 1px;
+  margin-bottom: var(--space-3);
+  overflow: hidden;
+}
+
+.hero__track-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--phosphor);
+  box-shadow: 0 0 8px var(--phosphor);
+  border-radius: 1px;
+  animation: track-sweep 3s var(--ease-out-expo) 1s forwards;
+}
+
+@keyframes track-sweep {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.hero__track-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: var(--phosphor-faint);
+  letter-spacing: 0.1em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__track-fill {
+    animation: none;
+    width: 100%;
+  }
+}
+</style>

@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NavBar from '../components/NavBar.astro';
+import ScrollTrackBot from '../components/ScrollTrackBot.astro';
+import HeroSection from '../components/HeroSection.astro';
+import ProblemSection from '../components/ProblemSection.astro';
+import ArchitectureSection from '../components/ArchitectureSection.astro';
+import ElectromagneticsSection from '../components/ElectromagneticsSection.astro';
+import SystemDesignSection from '../components/SystemDesignSection.astro';
+import ValidationSection from '../components/ValidationSection.astro';
+import TimelineSection from '../components/TimelineSection.astro';
+import GallerySection from '../components/GallerySection.astro';
+import TeamSection from '../components/TeamSection.astro';
+import FooterSection from '../components/FooterSection.astro';
+
+import site from '../content/site.json';
+---
+
+<Layout
+  title={site.meta.title}
+  description={site.meta.description}
+  ogImage={site.meta.ogImage}
+>
+  <NavBar />
+  <ScrollTrackBot />
+  <main id="main-content">
+    <HeroSection
+      title={site.title}
+      subtitle={site.subtitle}
+      stats={site.heroStats}
+      videoSrc={site.heroVideo}
+      posterSrc={site.heroPoster}
+    />
+    <ProblemSection />
+    <ArchitectureSection />
+    <ElectromagneticsSection />
+    <SystemDesignSection />
+    <ValidationSection />
+    <TimelineSection />
+    <GallerySection />
+    <TeamSection />
+  </main>
+  <FooterSection />
+</Layout>

@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage = '/media/images/technical-animation-poster.jpg' } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+  <meta property="og:url" content={canonicalUrl.toString()} />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+
+  <link rel="canonical" href={canonicalUrl.toString()} />
+
+  <!-- Fonts (Google Fonts CDN) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <title>{title}</title>
+</head>
+<body>
+  <slot />
+  <script>
+    // Scroll reveal observer
+    const revealElements = document.querySelectorAll('.reveal');
+    if (revealElements.length > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              (entry.target as HTMLElement).classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+      revealElements.forEach((el, i) => {
+        (el as HTMLElement).style.transitionDelay = `${(i % 4) * 80}ms`;
+        observer.observe(el);
+      });
+    } else {
+      revealElements.forEach((el) => el.classList.add('is-visible'));
+    }
+  </script>
+</body>
+</html>

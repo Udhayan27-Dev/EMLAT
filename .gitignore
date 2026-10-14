@@ -1,0 +1,28 @@
+# Build output
+dist/
+.output/
+
+# Dependencies
+node_modules/
+
+# Astro generated
+.astro/
+
+# Impeccable generated
+.impeccable/
+
+# Source materials (never deployed)
+_source/
+video/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+.idea/
+
+# Environment
+.env
+.env.local
