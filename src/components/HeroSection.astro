@@ -13,14 +13,17 @@ interface Props {
 }
 
 const { title, subtitle, stats, videoSrc, posterSrc } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const fullVideoSrc = videoSrc.startsWith('http') ? videoSrc : `${base}${videoSrc}`;
+const fullPosterSrc = posterSrc.startsWith('http') ? posterSrc : `${base}${posterSrc}`;
 ---
 
 <section class="hero graticule-bg" aria-labelledby="hero-title">
   <div class="hero__video-wrap" aria-hidden="true">
     <video
       class="hero__video"
-      src={videoSrc}
-      poster={posterSrc}
+      src={fullVideoSrc}
+      poster={fullPosterSrc}
       autoplay
       muted
       loop

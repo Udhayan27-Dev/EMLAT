@@ -1,5 +1,6 @@
 ---
 import gallery from '../content/gallery.json';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="section gallery-section graticule-bg" id="gallery" aria-labelledby="gallery-title">
@@ -19,8 +20,8 @@ import gallery from '../content/gallery.json';
           <div class="media-preview-wrap">
             <video
               class="media-video"
-              src={item.src}
-              poster={item.poster}
+              src={`${base}${item.src}`}
+              poster={`${base}${item.poster}`}
               preload="metadata"
               controls
               playsinline

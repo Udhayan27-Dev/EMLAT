@@ -7,7 +7,10 @@ interface Props {
   ogImage?: string;
 }
 
-const { title, description, ogImage = '/media/images/technical-animation-poster.jpg' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const defaultOg = `${base}/media/images/technical-animation-poster.jpg`;
+const { title, description, ogImage = defaultOg } = Astro.props;
+const formattedOg = ogImage.startsWith('http') ? ogImage : `${Astro.site?.toString().replace(/\/$/, '')}${ogImage.startsWith('/') ? '' : '/'}${ogImage}`;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -23,14 +26,14 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+  <meta property="og:image" content={formattedOg} />
   <meta property="og:url" content={canonicalUrl.toString()} />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+  <meta name="twitter:image" content={formattedOg} />
 
   <link rel="canonical" href={canonicalUrl.toString()} />
 

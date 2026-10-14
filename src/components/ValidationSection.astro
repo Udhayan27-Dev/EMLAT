@@ -1,5 +1,6 @@
 ---
 import validation from '../content/validation.json';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="section validation-section graticule-bg" id="validation" aria-labelledby="validation-title">
@@ -120,8 +121,8 @@ import validation from '../content/validation.json';
           <div class="testing-video-box">
             <video
               class="testing-video"
-              src="/media/videos/testing-sensor-track.mp4"
-              poster="/media/images/testing-sensor-track-poster.jpg"
+              src={`${base}/media/videos/testing-sensor-track.mp4`}
+              poster={`${base}/media/images/testing-sensor-track-poster.jpg`}
               controls
               playsinline
               preload="metadata"
@@ -141,8 +142,8 @@ import validation from '../content/validation.json';
           <div class="testing-video-box">
             <video
               class="testing-video"
-              src="/media/videos/testing-motor-driver.mp4"
-              poster="/media/images/testing-motor-driver-poster.jpg"
+              src={`${base}/media/videos/testing-motor-driver.mp4`}
+              poster={`${base}/media/images/testing-motor-driver-poster.jpg`}
               controls
               playsinline
               preload="metadata"
@@ -162,8 +163,8 @@ import validation from '../content/validation.json';
           <div class="testing-video-box">
             <video
               class="testing-video"
-              src="/media/videos/testing-telemetry-dashboard.mp4"
-              poster="/media/images/testing-telemetry-dashboard-poster.jpg"
+              src={`${base}/media/videos/testing-telemetry-dashboard.mp4`}
+              poster={`${base}/media/images/testing-telemetry-dashboard-poster.jpg`}
               controls
               playsinline
               preload="metadata"
